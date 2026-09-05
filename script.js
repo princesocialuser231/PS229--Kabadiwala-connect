@@ -4,9 +4,9 @@
     ---------------------------------------------------------- */
 
     let kabadiwalas = [
-      { id: 1, name: "Ramesh Kumar", area: "Sector 12", phone: "+91 98765 43210", rating: "4.6" },
-      { id: 2, name: "Suresh Traders", area: "Sector 9",  phone: "+91 91234 56780", rating: "4.3" },
-      { id: 3, name: "Green Scrap Co.", area: "Block C",  phone: "+91 99887 76655", rating: "4.8" }
+      { id: 1, name: "Prince Kumar", area: "Sector 12", phone: "+91 9310176402", rating: "4.6" },
+      { id: 2, name: "jha scrap dealers", area: "Sector 9",  phone: "+91 7079840944", rating: "4.3" },
+      { id: 3, name: "Green Scrap Co.", area: "Block C",  phone: "+91 00000000000", rating: "4.8" }
     ];
 
     // Same catalog is shown for every kabadiwala in this demo version.
