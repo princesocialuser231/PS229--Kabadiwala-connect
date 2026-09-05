@@ -1,0 +1,260 @@
+:root {
+      --background: #1B3A3A;
+      --text: #F1EDE3;
+      --accent: #B5542E;
+      --card-bg: #F1EDE3;
+      --card-text: #14201D;
+      --price-color: #7A8B6F;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: 'Work Sans', sans-serif;
+      margin: 0;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Roboto Slab', serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    a { color: inherit; }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--text);
+      color: var(--text);
+    }
+
+    /* ---------- HEADER (same on every screen) ---------- */
+    header {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(241,237,227,0.15);
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    #cart-button {
+      position: relative;
+      background: none;
+      border: 1px solid var(--text);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 18px;
+    }
+
+    #cart-count {
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      margin-left: 6px;
+    }
+
+    /* A "screen" is one full view: Home, Items, Cart, Checkout, Confirmation.
+       Only one is visible at a time -- controlled by JavaScript below. */
+    .screen { display: none; padding: 40px 0; }
+    .screen.active { display: block; }
+
+
+    /* ---------- HOME SCREEN ---------- */
+    .hero {
+      padding: 20px 0 40px;
+    }
+
+    .hero h1 { font-size: 2rem; max-width: 600px; }
+    .hero p { max-width: 550px; opacity: 0.85; }
+
+    .kabadiwala-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .kabadiwala-card {
+      background: var(--card-bg);
+      color: var(--card-text);
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    .kabadiwala-card h3 { margin: 0 0 4px 0; font-size: 1.1rem; }
+    .kabadiwala-card p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
+    .kabadiwala-card .btn { margin-top: 12px; }
+
+    /* About / Contact / Help sections at the bottom of the home screen */
+    .info-section {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(241,237,227,0.15);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .info-grid h4 { margin-bottom: 8px; }
+    .info-grid p { font-size: 0.9rem; opacity: 0.8; }
+
+
+    /* ---------- ITEMS SCREEN ---------- */
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .item-card {
+      background: var(--card-bg);
+      color: var(--card-text);
+      padding: 18px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .item-card .icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .item-card h4 { margin: 4px 0; font-size: 1rem; }
+    .item-card .price { color: var(--price-color); font-weight: bold; margin-bottom: 10px; }
+
+    .item-card input[type="number"] {
+      width: 70px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .others-box {
+      background: var(--card-bg);
+      color: var(--card-text);
+      padding: 18px;
+      border-radius: 6px;
+      margin-top: 24px;
+    }
+
+    .others-box .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .others-box input {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 140px;
+    }
+
+
+    /* ---------- CART SCREEN ---------- */
+    .cart-row {
+      background: var(--card-bg);
+      color: var(--card-text);
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cart-row .remove {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cart-total {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+
+    /* ---------- CHECKOUT SCREEN ---------- */
+    .form-card {
+      background: var(--card-bg);
+      color: var(--card-text);
+      padding: 26px;
+      border-radius: 6px;
+      max-width: 500px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+
+    /* ---------- CONFIRMATION SCREEN ---------- */
+    .confirmation-box {
+      background: var(--price-color);
+      color: #14201D;
+      padding: 24px;
+      border-radius: 6px;
+      max-width: 500px;
+    }
