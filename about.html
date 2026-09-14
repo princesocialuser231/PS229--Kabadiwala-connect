@@ -24,6 +24,34 @@
       opacity: 0.85;
       line-height: 1.7;
     }
+
+    .diff-list {
+      margin-top: 20px;
+    }
+
+    .diff-item {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .diff-num {
+      font-family: 'Roboto Slab', serif;
+      color: var(--price-color);
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      width: 32px;
+    }
+
+    .diff-item h4 {
+      margin: 0 0 6px 0;
+      font-size: 1.02rem;
+    }
+
+    .diff-item p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
   </style>
 </head>
 <body>
@@ -34,8 +62,8 @@
       <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Kabadiwala Connect</a></div>
       <nav>
         <a href="index.html">Home</a>
-        <a href="index.html#contact">Contact Us</a>
-        <a href="index.html#help">Help &amp; Support</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="help.html">Help &amp; Support</a>
       </nav>
     </div>
   </header>
@@ -64,7 +92,53 @@
          the right kabadiwala, so the connection actually happens — not just
          in an app, but in real life.</p>
 
-      <h2>Our Vision</h2>
+      <h2>How We're Different</h2>
+      <p>Most scrap platforms list a single price per material — plastic,
+         metal, e-waste, rubber — as if scrap arrives that neatly sorted.
+         In Delhi, it almost never does. Kabadiwala Connect is built around
+         how scrap actually shows up at the door:</p>
+
+      <div class="diff-list">
+        <div class="diff-item">
+          <div class="diff-num">1</div>
+          <div>
+            <h4>We deal in mixed items, not just clean categories</h4>
+            <p>A cooler fan has copper winding inside, a plastic blade, and a
+               metal body — three materials in one object. Beer bottles are
+               glass, an old cycle is rubber tyres on a metal frame. Rather
+               than forcing these into one price bucket, we let households
+               list the actual item, and the kabadiwala breaks it down and
+               prices it fairly, piece by piece.</p>
+          </div>
+        </div>
+
+        <div class="diff-item">
+          <div class="diff-num">2</div>
+          <div>
+            <h4>We're honest about weighing</h4>
+            <p>Households don't own weighing scales, so there's no way to
+               know an item's exact weight in advance. Only the kabadiwala,
+               who brings their own weighing equipment (small or large,
+               depending on the load), can confirm it on the spot. Our
+               listed rates are estimates to plan around — the final weight
+               and price are always confirmed at pickup, not promised
+               upfront.</p>
+          </div>
+        </div>
+
+        <div class="diff-item">
+          <div class="diff-num">3</div>
+          <div>
+            <h4>Transparency backed by our team</h4>
+            <p>If something feels off during a pickup, the customer isn't
+               left to sort it out alone with the dealer — they can reach
+               our team directly, since every request already passes
+               through us before it reaches the kabadiwala.</p>
+          </div>
+        </div>
+      </div>
+
+
       <p>Over time, we want every transaction on this platform to build a
          digital record for the kabadiwala — one that can eventually help them
          access fair credit, recognition, and inclusion in the formal economy

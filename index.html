@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kabadiwala Connect</title>
+  <title>Scrapdeal</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
@@ -13,11 +13,11 @@
   <!-- ===== HEADER (visible on every screen) ===== -->
   <header>
     <div class="container">
-      <div class="logo" onclick="showScreen('home')">Kabadiwala Connect</div>
+      <div class="logo" onclick="showScreen('home')">Scrapdeal</div>
       <nav>
         <a href="about.html">About</a>
-        <a onclick="scrollToInfo('contact')">Contact Us</a>
-        <a onclick="scrollToInfo('help')">Help &amp; Support</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="help.html">Help &amp; Support</a>
         <button id="cart-button" onclick="showScreen('cart')">
           Cart <span id="cart-count">0</span>
         </button>
@@ -33,34 +33,33 @@
     <div class="container">
 
       <div class="hero">
-        <h1>Sell your scrap to a trusted kabadiwala nearby.</h1>
+        <h1>Sell your scrap to a trusted kabadiwala(Scrap dealer) nearby.</h1>
         <p>Pick a kabadiwala below, choose what you're selling, and request
            a pickup. Our team connects your request directly to them.</p>
       </div>
 
-      <h2>Kabadiwalas Near You</h2>
+      <h2>Kabadiwalas(Scrap dealers) Available in shahbad daulatpur</h2>
       <div class="kabadiwala-grid" id="kabadiwala-list">
         <!-- filled in by JavaScript from the "kabadiwalas" list below -->
       </div>
 
-      <!-- ===== ABOUT / CONTACT / HELP ===== -->
+      <!-- ===== ABOUT / CONTACT / HELP -- now separate pages, linked here ===== -->
       <div class="info-section">
         <div class="info-grid">
-          <div id="about">
+          <div>
             <h4>About</h4>
-            <p>Kabadiwala Connect links households with local scrap collectors,
-               so every pickup is transparent and fairly priced.
-               <a href="about.html" style="text-decoration: underline;">Read our full story &rarr;</a></p>
+            <p>Learn how Scrapdeal started and where it's headed.
+               <a href="about.html" style="text-decoration: underline;">Read our story &rarr;</a></p>
           </div>
-          <div id="contact">
+          <div>
             <h4>Contact Us</h4>
-            <p>Email: team@kabadiwalaconnect.in<br>
-               Phone: +91 90000 00000</p>
+            <p>Questions or feedback?
+               <a href="contact.html" style="text-decoration: underline;">Get in touch &rarr;</a></p>
           </div>
-          <div id="help">
+          <div>
             <h4>Help &amp; Support</h4>
-            <p>Having trouble requesting a pickup? Reach out to us using the
-               contact details above and we'll help you directly.</p>
+            <p>Need help using the platform?
+               <a href="help.html" style="text-decoration: underline;">Visit Help &amp; Support &rarr;</a></p>
           </div>
         </div>
       </div>

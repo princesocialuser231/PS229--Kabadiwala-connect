@@ -4,9 +4,9 @@
     ---------------------------------------------------------- */
 
     let kabadiwalas = [
-      { id: 1, name: "Prince Kumar", area: "Sector 12", phone: "+91 9310176402", rating: "4.6" },
-      { id: 2, name: "jha scrap dealers", area: "Sector 9",  phone: "+91 7079840944", rating: "4.3" },
-      { id: 3, name: "Green Scrap Co.", area: "Block C",  phone: "+91 00000000000", rating: "4.8" }
+      { id: 1, name: "Prince Kumar", area: "Near Badli metro station", phone: "+91 9310176402"},
+      { id: 2, name: "jha scrap dealers", area: "Sector 27, Rohini ",  phone: "+91 7079840944" },
+      { id: 3, name: "Green Scrap Co.", area: "near Shahbad dairy , bawanna road",  phone: "+91 8826274114" }
     ];
 
     // Same catalog is shown for every kabadiwala in this demo version.
@@ -34,14 +34,6 @@
       window.scrollTo(0, 0);
     }
 
-    function scrollToInfo(id) {
-      showScreen("home");
-      setTimeout(function () {
-        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-      }, 50);
-    }
-
-
     /* ---------- HOME SCREEN: render kabadiwala list ---------- */
     function renderKabadiwalas() {
       const list = document.getElementById("kabadiwala-list");
@@ -51,7 +43,7 @@
         card.className = "kabadiwala-card";
         card.innerHTML = `
           <h3>${k.name}</h3>
-          <p>${k.area} • ⭐ ${k.rating}</p>
+          <p>${k.area} </p>
           <p>${k.phone}</p>
           <button class="btn" onclick="openItems(${k.id})">View Items</button>
         `;
