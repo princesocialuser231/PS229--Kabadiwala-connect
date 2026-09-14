@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track pickup — Kabadiwala Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo" onclick="location.href='index.html'">Kabadiwala Connect</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="collector.html">Collector</a>
+        <a href="admin.html">Ops</a>
+      </nav>
+    </div>
+  </header>
+  <div class="screen active">
+    <div class="container">
+      <h1>Track your pickup</h1>
+      <p class="muted">Enter the tracking code from your confirmation, or look up by mobile number.</p>
+      <div class="form-card">
+        <div class="form-group">
+          <label for="code">Tracking code</label>
+          <input id="code" placeholder="KC-XXXXXX">
+        </div>
+        <button class="btn" type="button" id="lookup-code">Track</button>
+        <div class="form-group" style="margin-top:20px;">
+          <label for="phone">Or household phone</label>
+          <input id="phone" placeholder="10-digit mobile">
+        </div>
+        <button class="btn btn-secondary" type="button" id="lookup-phone">Find my pickups</button>
+        <p id="track-error" class="banner" hidden></p>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get("code")) document.getElementById("code").value = params.get("code");
+
+    async function showPickup(code) {
+      const data = await api("/api/pickups/" + encodeURIComponent(code));
+      const items = (data.items || []).map(function (item) {
+        return "<li>" + escapeHtml(item.item_name) + " — " + escapeHtml(item.weight_kg) + " kg</li>";
+      }).join("");
+      document.getElementById("result").innerHTML =
+        "<div class='confirmation-box' style='margin-top:24px;'>" +
+        "<h3>" + escapeHtml(data.tracking_code) + " " + badge(data.status) + "</h3>" +
+        "<p>Collector: " + escapeHtml(data.kabadiwala_name) + " (+91 " + escapeHtml(data.kabadiwala_phone) + ")</p>" +
+        "<p>Address: " + escapeHtml(data.address) + "</p>" +
+        "<p>Preferred time: " + escapeHtml(data.preferred_time) + "</p>" +
+        "<p>Estimated total: ₹" + Number(data.estimated_total).toFixed(0) + "</p>" +
+        "<ul>" + items + "</ul></div>";
+    }
+
+    document.getElementById("lookup-code").addEventListener("click", async function () {
+      const box = document.getElementById("track-error");
+      box.hidden = true;
+      try {
+        await showPickup(document.getElementById("code").value.trim());
+      } catch (err) {
+        box.hidden = false;
+        box.textContent = err.message;
+      }
+    });
+
+    document.getElementById("lookup-phone").addEventListener("click", async function () {
+      const box = document.getElementById("track-error");
+      box.hidden = true;
+      try {
+        const data = await api("/api/household/pickups?phone=" + encodeURIComponent(document.getElementById("phone").value));
+        if (!data.pickups.length) {
+          document.getElementById("result").innerHTML = "<p class='muted'>No pickups found for that number.</p>";
+          return;
+        }
+        document.getElementById("result").innerHTML = "<div class='table-wrap'><table><thead><tr><th>Code</th><th>Collector</th><th>Status</th><th>Estimate</th></tr></thead><tbody>" +
+          data.pickups.map(function (p) {
+            return "<tr><td>" + escapeHtml(p.tracking_code) + "</td><td>" + escapeHtml(p.kabadiwala_name) +
+              "</td><td>" + badge(p.status) + "</td><td>₹" + Number(p.estimated_total).toFixed(0) + "</td></tr>";
+          }).join("") + "</tbody></table></div>";
+      } catch (err) {
+        box.hidden = false;
+        box.textContent = err.message;
+      }
+    });
+
+    if (params.get("code")) document.getElementById("lookup-code").click();
+  </script>
+</body>
+</html>

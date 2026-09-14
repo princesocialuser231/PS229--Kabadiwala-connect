@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collector desk — Kabadiwala Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo" onclick="location.href='index.html'">Kabadiwala Connect</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="track.html">Track</a>
+        <a href="admin.html">Ops</a>
+      </nav>
+    </div>
+  </header>
+  <div class="screen active">
+    <div class="container">
+      <h1>Collector desk</h1>
+      <p class="muted">Demo PINs are <strong>1234</strong> for every seeded kabadiwala.</p>
+      <div class="form-card" id="login-card">
+        <div class="form-group">
+          <label for="collector-id">Kabadiwala</label>
+          <select id="collector-id"></select>
+        </div>
+        <div class="form-group">
+          <label for="pin">PIN</label>
+          <input id="pin" type="password" value="1234">
+        </div>
+        <button class="btn" type="button" id="login">Open desk</button>
+        <p id="login-error" class="banner" hidden></p>
+      </div>
+      <div id="desk" hidden>
+        <p id="hello"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Code</th><th>Household</th><th>When</th><th>Status</th><th>Estimate</th><th>Action</th></tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <h2>Digital earnings ledger</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>When</th><th>Pickup</th><th>Amount</th><th>Note</th></tr></thead>
+            <tbody id="ledger-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="common.js"></script>
+  <script>
+    const nextStatus = { pending: "accepted", accepted: "en_route", en_route: "completed" };
+
+    async function loadCollectors() {
+      const data = await api("/api/kabadiwalas");
+      document.getElementById("collector-id").innerHTML = data.kabadiwalas.map(function (k) {
+        return "<option value='" + k.id + "'>" + escapeHtml(k.name) + " — " + escapeHtml(k.area) + "</option>";
+      }).join("");
+    }
+
+    async function refreshDesk() {
+      const data = await api("/api/collector/pickups");
+      document.getElementById("rows").innerHTML = data.pickups.map(function (p) {
+        const nxt = nextStatus[p.status];
+        const buttons = [];
+        if (nxt) buttons.push("<button class='btn' data-id='" + p.id + "' data-status='" + nxt + "'>" + nxt.replace("_", " ") + "</button>");
+        if (p.status !== "completed" && p.status !== "cancelled") {
+          buttons.push("<button class='btn btn-secondary' data-id='" + p.id + "' data-status='cancelled'>cancel</button>");
+        }
+        return "<tr><td>" + escapeHtml(p.tracking_code) + "</td><td>" + escapeHtml(p.household_name) +
+          "<br><span class='muted'>" + escapeHtml(p.address) + "</span></td><td>" + escapeHtml(p.preferred_time) +
+          "</td><td>" + badge(p.status) + "</td><td>₹" + Number(p.estimated_total).toFixed(0) +
+          "</td><td class='actions'>" + buttons.join(" ") + "</td></tr>";
+      }).join("") || "<tr><td colspan='6'>No pickups yet. Create one from the household page.</td></tr>";
+
+      document.getElementById("ledger-rows").innerHTML = data.ledger.map(function (row) {
+        return "<tr><td>" + escapeHtml(row.created_at) + "</td><td>" + escapeHtml(row.tracking_code || "-") +
+          "</td><td>₹" + Number(row.amount).toFixed(0) + "</td><td>" + escapeHtml(row.note || "") + "</td></tr>";
+      }).join("") || "<tr><td colspan='4'>No earnings yet. Complete a pickup to write a ledger row.</td></tr>";
+
+      document.querySelectorAll("#rows button").forEach(function (btn) {
+        btn.addEventListener("click", async function () {
+          await api("/api/pickups/" + btn.dataset.id + "/status", {
+            method: "PATCH",
+            body: JSON.stringify({ status: btn.dataset.status })
+          });
+          refreshDesk();
+        });
+      });
+    }
+
+    document.getElementById("login").addEventListener("click", async function () {
+      const box = document.getElementById("login-error");
+      box.hidden = true;
+      try {
+        const result = await api("/api/auth/collector", {
+          method: "POST",
+          body: JSON.stringify({
+            kabadiwala_id: document.getElementById("collector-id").value,
+            pin: document.getElementById("pin").value
+          })
+        });
+        sessionStorage.setItem("kc_token", result.token);
+        document.getElementById("hello").textContent = "Signed in as " + result.name;
+        document.getElementById("login-card").hidden = true;
+        document.getElementById("desk").hidden = false;
+        await refreshDesk();
+      } catch (err) {
+        box.hidden = false;
+        box.textContent = err.message;
+      }
+    });
+
+    loadCollectors();
+  </script>
+</body>
+</html>

@@ -13,12 +13,14 @@
   <!-- ===== HEADER (visible on every screen) ===== -->
   <header>
     <div class="container">
-      <div class="logo" onclick="showScreen('home')">Kabadiwala Connect</div>
+      <div class="logo" onclick="goHome()">Kabadiwala Connect</div>
       <nav>
         <a href="about.html">About</a>
-        <a onclick="scrollToInfo('contact')">Contact Us</a>
-        <a onclick="scrollToInfo('help')">Help &amp; Support</a>
-        <button id="cart-button" onclick="showScreen('cart')">
+        <a href="track.html">Track pickup</a>
+        <a href="collector.html">Collector</a>
+        <a href="admin.html">Ops</a>
+        <a onclick="scrollToInfo('contact')">Contact</a>
+        <button id="cart-button" type="button">
           Cart <span id="cart-count">0</span>
         </button>
       </nav>
@@ -38,10 +40,13 @@
            a pickup. Our team connects your request directly to them.</p>
       </div>
 
+      <div class="stats-strip" id="impact-stats"></div>
+
       <h2>Kabadiwalas Near You</h2>
-      <div class="kabadiwala-grid" id="kabadiwala-list">
-        <!-- filled in by JavaScript from the "kabadiwalas" list below -->
+      <div class="search-row">
+        <input type="search" id="area-search" placeholder="Filter by name or area (e.g. Sector 12)">
       </div>
+      <div class="kabadiwala-grid" id="kabadiwala-list"></div>
 
       <!-- ===== ABOUT / CONTACT / HELP ===== -->
       <div class="info-section">
@@ -55,7 +60,7 @@
           <div id="contact">
             <h4>Contact Us</h4>
             <p>Email: team@kabadiwalaconnect.in<br>
-               Phone: +91 90000 00000</p>
+               Phone: +91 93101 76402</p>
           </div>
           <div id="help">
             <h4>Help &amp; Support</h4>
@@ -133,8 +138,9 @@
           </div>
           <div class="form-group">
             <label for="cf-phone">Phone Number</label>
-            <input type="tel" id="cf-phone" required>
+            <input type="tel" id="cf-phone" required placeholder="10-digit mobile">
           </div>
+          <p id="checkout-error" class="banner" hidden></p>
           <div class="form-group">
             <label for="cf-address">Address</label>
             <input type="text" id="cf-address" required>
@@ -156,11 +162,14 @@
   <div class="screen" id="screen-confirmation">
     <div class="container">
       <div class="confirmation-box">
-        <h3>Request Sent!</h3>
+        <h3>Request logged</h3>
+        <p>Your tracking code</p>
+        <p class="tracking-code" id="tracking-code"></p>
         <p id="confirmation-summary"></p>
-        <p>Our team will connect you with the kabadiwala shortly.</p>
+        <p>Share this code with the collector, or track status any time.</p>
+        <a class="btn" id="track-link" href="track.html">Track this pickup</a>
       </div>
-      <button class="btn" style="margin-top:24px;" onclick="startOver()">Back to Home</button>
+      <button class="btn btn-secondary" style="margin-top:24px;" onclick="startOver()">Back to Home</button>
     </div>
   </div>
 
