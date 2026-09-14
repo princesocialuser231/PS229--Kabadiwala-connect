@@ -4,7 +4,7 @@
     ---------------------------------------------------------- */
 
     let kabadiwalas = [
-      { id: 1, name: "Prince Kumar", area: "Near Badli metro station", phone: "+91 9310176402"},
+      { id: 1, name: "Abhinav scraps", area: "Near Badli metro station", phone: "+91 8076316321"},
       { id: 2, name: "jha scrap dealers", area: "Sector 27, Rohini ",  phone: "+91 7079840944" },
       { id: 3, name: "Green Scrap Co.", area: "near Shahbad dairy , bawanna road",  phone: "+91 8826274114" }
     ];
